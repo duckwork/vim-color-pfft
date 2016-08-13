@@ -35,29 +35,45 @@ let s:color15    = { "gui": "#eeeeee", "cterm": "15" }
 
 " TODO: add 'subtle' and 'subtler' instead of 'sh' for moar better light theme
 if &background == "dark"
-    let s:fg = s:foreground
-    let s:bg = s:background
-    let s:sh = s:color8
-    let s:black   = {'bg': s:color0, 'fg': s:color8 }
-    let s:red     = {'bg': s:color1, 'fg': s:color9 }
-    let s:green   = {'bg': s:color2, 'fg': s:color10}
-    let s:yellow  = {'bg': s:color3, 'fg': s:color11}
-    let s:blue    = {'bg': s:color4, 'fg': s:color12}
-    let s:magenta = {'bg': s:color5, 'fg': s:color13}
-    let s:cyan    = {'bg': s:color6, 'fg': s:color14}
-    let s:white   = {'bg': s:color7, 'fg': s:color15}
+    let s:fg         = s:foreground
+    let s:bg         = s:background
+    let s:sh         = s:color8
+    let s:black      = {'bg': s:color0, 'fg': s:color8 }
+    let s:red        = {'bg': s:color1, 'fg': s:color9 }
+    let s:green      = {'bg': s:color2, 'fg': s:color10}
+    let s:yellow     = {'bg': s:color3, 'fg': s:color11}
+    let s:blue       = {'bg': s:color4, 'fg': s:color12}
+    let s:magenta    = {'bg': s:color5, 'fg': s:color13}
+    let s:cyan       = {'bg': s:color6, 'fg': s:color14}
+    let s:white      = {'bg': s:color7, 'fg': s:color15}
+    let s:blacker    = {'fg': s:color8 , 'bg': s:color0}
+    let s:redder     = {'fg': s:color9 , 'bg': s:color1}
+    let s:greener    = {'fg': s:color10, 'bg': s:color2}
+    let s:yellower   = {'fg': s:color11, 'bg': s:color3}
+    let s:bluer      = {'fg': s:color12, 'bg': s:color4}
+    let s:magenter   = {'fg': s:color13, 'bg': s:color5}
+    let s:cyaner     = {'fg': s:color14, 'bg': s:color6}
+    let s:whiter     = {'fg': s:color15, 'bg': s:color7}
 else
-    let s:fg = s:background
-    let s:bg = s:foreground
-    let s:sh = s:color7
-    let s:black   = {'fg': s:color8 , 'bg': s:color0}
-    let s:red     = {'fg': s:color9 , 'bg': s:color1}
-    let s:green   = {'fg': s:color10, 'bg': s:color2}
-    let s:yellow  = {'fg': s:color11, 'bg': s:color3}
-    let s:blue    = {'fg': s:color12, 'bg': s:color4}
-    let s:magenta = {'fg': s:color13, 'bg': s:color5}
-    let s:cyan    = {'fg': s:color14, 'bg': s:color6}
-    let s:white   = {'fg': s:color15, 'bg': s:color7}
+    let s:fg         = s:background
+    let s:bg         = s:foreground
+    let s:sh         = s:color7
+    let s:black      = {'fg': s:color8 , 'bg': s:color0}
+    let s:red        = {'fg': s:color9 , 'bg': s:color1}
+    let s:green      = {'fg': s:color10, 'bg': s:color2}
+    let s:yellow     = {'fg': s:color11, 'bg': s:color3}
+    let s:blue       = {'fg': s:color12, 'bg': s:color4}
+    let s:magenta    = {'fg': s:color13, 'bg': s:color5}
+    let s:cyan       = {'fg': s:color14, 'bg': s:color6}
+    let s:white      = {'fg': s:color15, 'bg': s:color7}
+    let s:blacker    = {'bg': s:color0, 'fg': s:color8 }
+    let s:redder     = {'bg': s:color1, 'fg': s:color9 }
+    let s:greener    = {'bg': s:color2, 'fg': s:color10}
+    let s:yellower   = {'bg': s:color3, 'fg': s:color11}
+    let s:bluer      = {'bg': s:color4, 'fg': s:color12}
+    let s:magenter   = {'bg': s:color5, 'fg': s:color13}
+    let s:cyaner     = {'bg': s:color6, 'fg': s:color14}
+    let s:whiter     = {'bg': s:color7, 'fg': s:color15}
 endif
 
 function! s:h(group, style)
@@ -74,6 +90,10 @@ function! s:h(group, style)
           \ "cterm="   (has_key(a:style, "cterm") ? a:style.cterm    : "NONE")
     endif
 endfunction
+
+" Kludgy functions for linux terminal, etc.
+let s:visualcolor = s:{get(g:, 'pfft_visualcolor', 'black')}.bg
+let s:linenrcolor = s:{get(g:, 'pfft_linenrcolor', 'black')}.bg
 
 " Builtin
 call s:h("ColorColumn",   {'bg': s:sh})
@@ -96,8 +116,8 @@ call s:h("Folded",        {'bg': s:sh, 'fg': s:black.fg})
 call s:h("FoldColumn",    {'bg': s:black.bg})
 call s:h("SignColumn",    'FoldColumn')
 call s:h("IncSearch",     {'fg': s:black.bg, 'bg': s:yellow.bg})
-call s:h("LineNr",        {'fg': s:black.bg})
-call s:h("CursorLineNr",  {'fg': s:black.fg})
+call s:h("LineNr",        {'fg': s:linenrcolor})
+call s:h("CursorLineNr",  {'fg': s:magenta.bg})
 call s:h("MatchParen",    {'bg': s:black.bg, 'gui': 'bold', 'cterm': 'bold'})
 call s:h("ModeMsg",       'CursorLineNr')
 call s:h("MoreMsg",       'ModeMsg')
@@ -114,13 +134,13 @@ call s:h("SpellBad",      {'bg': s:black.bg, 'gui': 'underline'})
 call s:h("SpellCap",      {'bg': s:black.bg, 'gui': 'underline'})
 call s:h("SpellLocal",    {'bg': s:black.bg, 'gui': 'underline'})
 call s:h("SpellRare",     {'bg': s:black.bg, 'gui': 'underline'})
-call s:h("StatusLine",    {'gui': 'bold,reverse', 'cterm': 'bold,reverse'})
+call s:h("StatusLine",    {'bg': s:white.bg, 'fg': s:blacker.bg})
 call s:h("StatusLineNC",  {'bg': s:black.bg, 'fg': s:background})
 call s:h("TabLine",       {'bg': s:sh})
 call s:h("TabLineFill",   'StatusLineNC')
 call s:h("TabLineSel",    'StatusLine')
 call s:h("Title",         {'fg': s:blue.fg, 'gui': 'bold', 'cterm': 'bold'})
-call s:h("Visual",        {'bg': s:black.bg})
+call s:h("Visual",        {'bg': s:visualcolor})
 call s:h("VisualNOS",     {})
 call s:h("WarningMsg",    {'fg': s:black.bg, 'bg': s:yellow.bg})
 call s:h("WildMenu",      {'bg': s:blue.bg})
