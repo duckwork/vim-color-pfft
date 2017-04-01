@@ -14,7 +14,7 @@ let s:foreground =  { 'gui': '#f0f0f0', 'cterm': 'NONE' }
 let s:background =  { 'gui': '#111111', 'cterm': 'NONE' }
 let s:color0     =  { 'gui': '#222222', 'cterm': '0' }
 let s:color1     =  { 'gui': '#a81111', 'cterm': '1' }
-let s:color2     =  { 'gui': '#a8a811', 'cterm': '2' }
+let s:color2     =  { 'gui': '#11a811', 'cterm': '2' }
 let s:color3     =  { 'gui': '#a8a811', 'cterm': '3' }
 let s:color4     =  { 'gui': '#1111a8', 'cterm': '4' }
 let s:color5     =  { 'gui': '#a811a8', 'cterm': '5' }
@@ -117,7 +117,7 @@ call s:h('SpellBad',      {fg: s:warn, attr: 'bold'})
 call s:h('SpellCap',      'SpellBad')
 call s:h('SpellLocal',    'SpellBad')
 call s:h('SpellRare',     'SpellBad')
-call s:h('StatusLine',    {fg: s:attn, bg: s:color0, attr: 'inverse'})
+call s:h('StatusLine',    {fg: s:attn, attr: 'inverse,bold'})
 call s:h('StatusLineNC',  {fg: s:color8, attr: 'inverse'})
 call s:h('TabLine',       'StatusLineNC')
 call s:h('TabLineFill',   'StatusLineNC')
@@ -142,10 +142,10 @@ call s:h('Identifier',     'Normal')
 call s:h('Function',       'Identifier')
 
 call s:h('Statement',      {attr: 'bold'})
-call s:h('Conditional',    'Statement')
-call s:h('Repeat',         'Statement')
+call s:h('Conditional',    {fg: s:attn})
+call s:h('Repeat',         'Conditional')
 call s:h('Label',          'Statement')
-call s:h('Operator',       'Statement')
+call s:h('Operator',       'Conditional')
 call s:h('Keyword',        'Statement')
 call s:h('Exception',      'Statement')
 
@@ -168,11 +168,17 @@ call s:h('SpecialComment', 'Special')
 call s:h('Debug',          'Special')
 
 call s:h('Underlined',     {attr: 'underline'})
-call s:h('Error',          {fg: s:warn, attr: 'bold'})
+call s:h('Error',          {fg: s:warn, attr: 'inverse,bold'})
 call s:h('Todo',           {fg: s:info, attr: 'inverse'})
 
 " Filetype-specific
 call s:h('vimCommentTitle', {fg: s:subtle, attr: 'bold'})
 
+call s:h('helpBacktick', {attr: 'italic'})
+
 call s:h('pandocEmphasis', {attr: 'italic'})
 call s:h('pandocStrong', {attr: 'bold'})
+
+call s:h('ShLoop', {fg: s:attn})
+
+call s:h('haskellPragma', 'Comment')
